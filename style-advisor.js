@@ -56,6 +56,27 @@ window.msSaveEmail = function() {
   window.msRestart=function(){msTrack('ms_restarted');if(chat())chat().innerHTML='';idx=0;flow=[...F0];Object.keys(sel).forEach(k=>delete sel[k]);prog();start();};
   function start(){msg("Hi! I'm your Mars Suspenders style advisor. Let's build your perfect pair.",'bot');setTimeout(()=>{msg(D.style.q,'bot');setTimeout(()=>render('style',D.style),60);},500);}
   document.addEventListener('DOMContentLoaded',function(){
+    // Auto-open after 2 seconds
+    setTimeout(function(){
+      var p=document.getElementById('ms-panel');
+      if(p && !p.classList.contains('ms-open')){
+        p.classList.add('ms-open');
+        msTrack('ms_widget_opened');
+      }
+    },2000);
+
+    document.getElementById('ms-fab')?.addEventListener('click',()=>{
+      var p=document.getElementById('ms-panel');
+      var opening=!p.classList.contains('ms-open');
+      p.classList.toggle('ms-open');
+      if(opening) msTrack('ms_widget_opened');
+    });
+    document.getElementById('ms-close')?.addEventListener('click',()=>{
+      document.getElementById('ms-panel').classList.remove('ms-open');
+      msTrack('ms_widget_closed');
+    });
+    prog();setTimeout(start,200);
+  });
     document.getElementById('ms-fab')?.addEventListener('click',()=>{
       var p=document.getElementById('ms-panel');
       var opening=!p.classList.contains('ms-open');
